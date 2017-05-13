@@ -1,5 +1,7 @@
 language: ruby
 cache: bundler
+# To use rbx environment.
+dist: trusty
 sudo: false
 before_install:
   - gem install bundler
@@ -10,8 +12,9 @@ rvm:
   - 2.2.7
   - 2.3.4
   - 2.4.1
+  - ruby-head
   - jruby-9.0.5.0
-  - rbx-2
+  - rbx-3
 gemfile:
   - Gemfile
   - gemfiles/Gemfile-4-0-stable
@@ -21,6 +24,18 @@ gemfile:
 matrix:
   exclude:
     - gemfile: Gemfile
+    - gemfile: gemfiles/Gemfile-4-0-stable
+      rvm: 2.4.1
+    - gemfile: gemfiles/Gemfile-4-1-stable
+      rvm: 2.4.1
+    - gemfile: gemfiles/Gemfile-4-0-stable
+      rvm: ruby-head
+    - gemfile: gemfiles/Gemfile-4-1-stable
+      rvm: ruby-head
+    - gemfile: gemfiles/Gemfile-4-0-stable
+      rvm: rbx-3
+    - gemfile: gemfiles/Gemfile-4-1-stable
+      rvm: rbx-3
     - gemfile: gemfiles/Gemfile-5-0-stable
   include:
     - gemfile: Gemfile
@@ -30,12 +45,23 @@ matrix:
     - gemfile: Gemfile
       rvm: 2.4.1
     - gemfile: Gemfile
+      rvm: ruby-head
+    - gemfile: Gemfile
+      rvm: rbx-3
+    - gemfile: gemfiles/Gemfile-5-0-stable
       rvm: 2.2.7
     - gemfile: gemfiles/Gemfile-5-0-stable
       rvm: 2.3.4
     - gemfile: gemfiles/Gemfile-5-0-stable
       rvm: 2.4.1
     - gemfile: gemfiles/Gemfile-5-0-stable
+      rvm: ruby-head
+    - gemfile: gemfiles/Gemfile-5-0-stable
+      rvm: rbx-3
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: rbx-3
+  fast_finish: true
 notifications:
   email: false
   campfire:
